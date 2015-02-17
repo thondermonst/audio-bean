@@ -3,12 +3,20 @@ require_once 'rb.php';
 
 class Artist_model extends CI_Model {
     
+	/**
+	 * Construct
+	 */
     public function __construct() {
         parent::__construct();
         
         R::setup('mysql:host=localhost; dbname=rb_test','rb_test','rb_test');
     }
     
+    /**
+     * Get all artists
+     * 
+     * @return RedBean_OODBBean[]
+     */
     public function getAllArtists() {
         $count = R::count('artist');
         
@@ -22,12 +30,24 @@ class Artist_model extends CI_Model {
         return $result;     
     }
     
+    /**
+     * Get artist
+     * 
+     * @param int $aid
+     * @return RedBean_OODBBean
+     */
     public function getArtist($aid) {
         $artist = R::load('artist', $aid);
         
         return $artist;
     }
     
+    /**
+     * Add artist
+     * 
+     * @param array $artist
+     * @return int
+     */
     public function addArtist($artist) {
         $new_artist = R::dispense('artist');
         
@@ -38,6 +58,11 @@ class Artist_model extends CI_Model {
         return $id;
     }
     
+    /**
+     * Update artist
+     * 
+     * @param array $artist
+     */
     public function updateArtist($artist) {
         $up_artist = R::load('artist', $artist['id']);
         
@@ -48,6 +73,11 @@ class Artist_model extends CI_Model {
         return;
     }
     
+    /**
+     * Delete artist
+     * 
+     * @param int $aid
+     */
     public function deleteArtist($aid) {
         $del_artist = R::load('artist', $aid);
         
@@ -56,6 +86,12 @@ class Artist_model extends CI_Model {
         return;
     }
     
+    /**
+     * Check duplicate artist
+     * 
+     * @param array $artist
+     * @return boolean
+     */
     public function checkDuplicateArtist($artist) {
         $duplicate = R::find('artist', ' name LIKE "' . $artist['name'] . '"');
         
