@@ -4,6 +4,11 @@ require 'main.php';
 
 class Index extends Main {
     
+	/**
+	 * @var str
+	 */
+	private $_active;
+	
     /**
      * Construct
      */
@@ -25,17 +30,17 @@ class Index extends Main {
      * @param int $offset
      */
     public function disc($offset = 0) {
+    	//Set active
+    	$this->_active = 'disc';
+    	
         //Set page title
         $this->data['page_title'] = 'Discs';
         
         //Load disc model
         $this->load->model('Disc_model');
         
-        //Create navigation
-        $nav = $this->_make_nav('disc'); 
-
-        //Create header
-        $this->_add_html($this->load->view('header', array('nav' => $nav), TRUE), 'header');
+        //Header
+        $this->_create_header();
 
         //Set message
         $message = (isset($_REQUEST['message'])) ? $_REQUEST['message'] : '';
@@ -46,8 +51,8 @@ class Index extends Main {
         //Create full page
         $this->_add_html($this->load->view('disc', array('discs' => $discs, 'message' => $message), TRUE), 'full');
         
-        //Create footer
-        $this->_add_html($this->load->view('footer', array(), TRUE), 'footer');
+        //Footer
+        $this->_create_footer();
         
         //Render page
         $this->_render_page();
@@ -58,14 +63,14 @@ class Index extends Main {
      * Add Disc
      */
     public function adddisc() {
+    	//Set active
+    	$this->_active = 'disc';
+    	
         //Set page title
         $this->data['page_title'] = 'Add a disc';
         
-        //Create navigation
-        $nav = $this->_make_nav('disc');
-        
-        //Create header
-        $this->_add_html($this->load->view('header', array('nav' => $nav), TRUE), 'header');
+        //Header
+        $this->_create_header();
         
         //Get disc form
         $form = $this->_disc_form();
@@ -73,8 +78,8 @@ class Index extends Main {
         //Create full page
         $this->_add_html($this->load->view('adddisc', array('form' => $form), TRUE), 'full');
         
-        //Create footer
-        $this->_add_html($this->load->view('footer', array(), TRUE), 'footer');
+        //Footer
+        $this->_create_footer();
         
         //Render page
         $this->_render_page();
@@ -86,23 +91,23 @@ class Index extends Main {
      * @param int $did
      */
     public function updatedisc($did) {
+    	//Set active
+    	$this->_active = 'disc';
+    	
         //Set page title
         $this->data['page_title'] = 'Update a disc';
         
-        //Create navigation
-        $nav = $this->_make_nav('disc');
-        
-        //Create header
-        $this->_add_html($this->load->view('header', array('nav' => $nav), TRUE), 'header');
+        //Header
+        $this->_create_header();
         
         //Get disc form
         $form = $this->_disc_form($did);
-        
+
         //Create full page
         $this->_add_html($this->load->view('adddisc', array('form' => $form), TRUE), 'full');
         
-        //Create footer
-        $this->_add_html($this->load->view('footer', array(), TRUE), 'footer');
+        //Footer
+        $this->_create_footer();
         
         //Render page
         $this->_render_page();
@@ -182,17 +187,17 @@ class Index extends Main {
      * @param int $offset
      */
     public function artist($offset = 0) {
+    	//Set active
+    	$this->_active = 'artist';
+    	
         //Set page title
         $this->data['page_title'] = 'Artists';
         
         //Load artist model
         $this->load->model('Artist_model');
         
-        //Create navigation
-        $nav = $this->_make_nav('artist');
-        
-        //Create header
-        $this->_add_html($this->load->view('header', array('nav' => $nav), TRUE), 'header');
+        //Header
+        $this->_create_header();
         
         //Set message
         $message = (isset($_REQUEST['message'])) ? $_REQUEST['message'] : '';
@@ -203,8 +208,8 @@ class Index extends Main {
         //Create full page
         $this->_add_html($this->load->view('artist', array('artists' => $artists, 'message' => $message), TRUE), 'full');
         
-        //Create footer
-        $this->_add_html($this->load->view('footer', array(), TRUE), 'footer');
+        //Footer
+        $this->_create_footer();
         
         //Render page
         $this->_render_page();
@@ -214,14 +219,14 @@ class Index extends Main {
      * Add Artist
      */
     public function addartist() {
+    	//Set active
+    	$this->_active = 'artist';
+    	
         //Set page title
         $this->data['page_title'] = 'Add an artist';
         
-        //Create header
-        $nav = $this->_make_nav('artist');
-
-        //Create header
-        $this->_add_html($this->load->view('header', array('nav' => $nav), TRUE), 'header');
+        //Header
+        $this->_create_header();
         
         //Get artist
         $form = $this->_artist_form();
@@ -229,8 +234,8 @@ class Index extends Main {
         //Create full page
         $this->_add_html($this->load->view('addartist', array('form' => $form), TRUE), 'full');
         
-        //Create footer
-        $this->_add_html($this->load->view('footer', array(), TRUE), 'footer');
+        //Footer
+        $this->_create_footer();
         
         //Render page 
         $this->_render_page();
@@ -242,14 +247,14 @@ class Index extends Main {
      * @param int $aid
      */
     public function updateartist($aid) {
+    	//Set active
+    	$this->_active = 'artist';
+    	
         //Set page title
         $this->data['page_title'] = 'Update an artist';
         
-        //Create header
-        $nav = $this->_make_nav('artist');
-
-        //Create header
-        $this->_add_html($this->load->view('header', array('nav' => $nav), TRUE), 'header');
+        //Header
+        $this->_create_header();
         
         //Get artist
         $form = $this->_artist_form($aid);
@@ -257,8 +262,8 @@ class Index extends Main {
         //Create full page
         $this->_add_html($this->load->view('addartist', array('form' => $form), TRUE), 'full');
         
-        //Create footer
-        $this->_add_html($this->load->view('footer', array(), TRUE), 'footer');
+        //Footer
+        $this->_create_footer();
         
         //Render page 
         $this->_render_page();
@@ -337,14 +342,36 @@ class Index extends Main {
         
         $this->artist();
     }
+    
+    /**
+     * About
+     */
+    public function about() {
+    	//Set active
+    	$this->_active =  'about';
+    	
+    	//Set page title
+    	$this->data['page_title'] = 'About';
+    	
+    	//Header
+    	$this->_create_header();
+    	
+    	//Create full page
+    	$this->_add_html($this->load->view('about', array(), TRUE), 'full');
+
+    	//Footer
+    	$this->_create_footer();
+    	
+    	//Render page
+    	$this->_render_page();
+    }
 
     /**
      * Make navigation
      * 
-     * @param int $active
-     * @return string
+     * @return array
      */
-    private function _make_nav($active) {
+    private function _make_nav() {
         $tabs = array(
             '0' => array(
                 'title' => 'Discs',
@@ -357,7 +384,7 @@ class Index extends Main {
         );
         
         foreach($tabs as $key => $tab) {
-            if($tab['mname'] == $active) {
+            if($tab['mname'] == $this->_active) {
                 $tabs[$key]['state'] = 'active'; 
             } else {
                 $tabs[$key]['state'] = 'inactive';
@@ -365,6 +392,30 @@ class Index extends Main {
         }
         
         return $tabs;
+    }
+    
+    /**
+     * Make subnav
+     * 
+     * @return array
+     */
+    private function _make_subnav() {
+    	$tabs = array(
+    		'0' => array(
+    			'title' => 'About',
+    			'mname' => 'about'
+    		)
+    	);
+    	
+    	foreach($tabs as $key => $tab) {
+    		if($tab['mname'] == $this->_active) {
+    			$tabs[$key]['state'] = 'active';
+    		} else {
+    			$tabs[$key]['state'] = 'inactive';
+    		}
+    	}
+    	
+    	return $tabs;
     }
     
     /**
@@ -505,5 +556,27 @@ class Index extends Main {
         }
         
         return $form;
+    }
+    
+    /**
+     * Create header
+     */
+    private function _create_header() {
+    	//Create navigation
+    	$nav = $this->_make_nav();
+    	
+    	//Create header
+    	$this->_add_html($this->load->view('header', array('nav' => $nav), TRUE), 'header');    	
+    }
+    
+    /**
+     * Create footer
+     */
+    private function _create_footer() {
+    	//Create subnavigation
+    	$subnav = $this->_make_subnav();
+    	
+    	//Create footer
+    	$this->_add_html($this->load->view('footer', array('subnav' => $subnav), TRUE), 'footer');    	
     }
 }

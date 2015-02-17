@@ -7,6 +7,10 @@ html, body {
     margin: 0;
 }
 
+a {
+	color: #ff0000;
+}
+
 #container {
     width: 1000px;
     margin: 0 auto;
@@ -17,7 +21,6 @@ html, body {
     width: 1000px;
     height: 65px;
 }
-
 
 #header #top {
     float: left;
@@ -39,37 +42,58 @@ html, body {
     margin: 0 10px 5px;
 }
 
-#header #navigation {
+#header #navigation, #footer #subnavigation {
     float: left;
-    width: 100%;
+    width: 998px;
     height: 30px;
-    margin-top: -30px;
 }
 
-#header #navigation ul {
-    float: left;
+#header #navigation {
+	margin-top: -30px;
+}
+
+#footer #subnavigation {
+    margin-top: 0;	
+}
+
+#header #navigation ul, #footer #subnavigation ul {
     padding: 0;
     margin: 0;
     list-style: none;
 }
 
-#header #navigation ul li {
+#header #navigation ul {
+	float: left;
+}
+
+#footer #subnavigation ul {
+	float: right;
+}
+
+#header #navigation ul li, #footer #subnavigation ul li {
     float: left;
     height: 20px;
-    padding: 5px 15px;
-    margin-right: 5px;
+    padding: 5px 15px;    
     background: #ffffff;
     font-size: 15px;
     font-weight: bold;
-    box-shadow: 1px 1px 1px #999999;
+    box-shadow: 2px 2px 2px #999999;
 }
 
-#header #navigation ul li a {
+#header #navigation ul li {
+	margin-right: 5px;
+}
+
+#footer #subnavigation ul li {
+	margin-left: 5px;
+}
+
+#header #navigation ul li a, #footer #subnavigation ul li a {
     text-decoration: none;
     color: #999999;
 }
 
-#header #navigation ul li a.active {
+#header #navigation ul li a.active, #footer #subnavigation ul li a.active {
     color: #333333;
 }
 
@@ -231,18 +255,22 @@ html, body {
 
 #footer {
     float: left;
-    width: 960px;
-    height: 100px;
-    padding: 10px;
-    text-align: center;
+    width: 1000px;
+    height: 65px;
 }
 
-#footer a {
+#footer #bottom {
+    float: left;
+    width: 100%;
+	text-align: center;
+}
+
+#footer #bottom a {
     color: #333333;
     font-size: 11px;
     text-decoration: none;
 }
 
-#footer a:hover {
+#footer #bottom a:hover {
     color: #ff0000;
 }
