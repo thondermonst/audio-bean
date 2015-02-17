@@ -4,10 +4,19 @@ require 'main.php';
 
 class Index extends Main {
     
+	const MAX_DISCS_PER_PAGE = 50;
+	
+	const MAX_ARTISTS_PER_PAGE = 50;
+	
 	/**
 	 * @var str
 	 */
 	private $_active;
+	
+	/**
+	 * @var int
+	 */
+	private $_offset;
 	
     /**
      * Construct
@@ -33,6 +42,9 @@ class Index extends Main {
     	//Set active
     	$this->_active = 'disc';
     	
+    	//Set offset
+    	$this->_offset = $offset;
+    	
         //Set page title
         $this->data['page_title'] = 'Discs';
         
@@ -46,7 +58,7 @@ class Index extends Main {
         $message = (isset($_REQUEST['message'])) ? $_REQUEST['message'] : '';
         
         //Create disc listing
-        $discs = $this->Disc_model->getAllDiscs($offset);
+        $discs = $this->Disc_model->getAllDiscs(self::MAX_DISCS_PER_PAGE, $offset);
         
         //Create full page
         $this->_add_html($this->load->view('disc', array('discs' => $discs, 'message' => $message), TRUE), 'full');
@@ -189,7 +201,10 @@ class Index extends Main {
     public function artist($offset = 0) {
     	//Set active
     	$this->_active = 'artist';
-    	
+
+    	//Set offset
+    	$this->_offset = $offset;
+    	    	
         //Set page title
         $this->data['page_title'] = 'Artists';
         
@@ -203,7 +218,7 @@ class Index extends Main {
         $message = (isset($_REQUEST['message'])) ? $_REQUEST['message'] : '';
         
         //Create artist listing
-        $artists = $this->Artist_model->getAllArtists($offset);
+        $artists = $this->Artist_model->getAllArtists(self::MAX_ARTISTS_PER_PAGE, $offset);
         
         //Create full page
         $this->_add_html($this->load->view('artist', array('artists' => $artists, 'message' => $message), TRUE), 'full');

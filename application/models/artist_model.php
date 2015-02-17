@@ -15,12 +15,14 @@ class Artist_model extends CI_Model {
     /**
      * Get all artists
      * 
+     * @param int $limit
+     * @param int $offset
      * @return RedBean_OODBBean[]
      */
-    public function getAllArtists() {
+    public function getAllArtists($limit, $offset) {
         $count = R::count('artist');
         
-        $artists = R::findAll('artist', 'ORDER BY name ASC');
+        $artists = R::findAll('artist', 'ORDER BY name ASC LIMIT ' . $limit . ' OFFSET ' . $offset);
         
         $result = array(
             'count' => $count,

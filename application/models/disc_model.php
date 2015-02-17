@@ -15,13 +15,14 @@ class Disc_model extends CI_Model {
     /**
      * Get all discs
      * 
+     * @param int $limit
      * @param int $offset
      * @return RedBean_OODBBean[]
      */
-    public function getAllDiscs($offset) {
+    public function getAllDiscs($limit, $offset) {
         $count = R::count('disc');
         
-        $discs = R::findAll('disc', ' ORDER BY artist ASC, year ASC');
+        $discs = R::findAll('disc', ' ORDER BY artist ASC, year ASC LIMIT ' . $limit . ' OFFSET ' . $offset);
         
         foreach($discs as $key => $disc) {
             $artist = R::load('artist', $disc->artist);
