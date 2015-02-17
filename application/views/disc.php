@@ -32,6 +32,6 @@
     <?php endif; ?>
 </div>
 <div id="adddisc">
-    <?php print anchor('index/adddisc','ADD DISC >'); ?>
+    <?php print anchor('index/adddisc','ADD DISC'); ?>
 </div>
 <div class="clear"></div>

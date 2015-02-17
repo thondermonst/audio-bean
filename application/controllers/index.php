@@ -4,19 +4,23 @@ require 'main.php';
 
 class Index extends Main {
     
-	const MAX_DISCS_PER_PAGE = 50;
-	
-	const MAX_ARTISTS_PER_PAGE = 50;
-	
-	/**
-	 * @var str
-	 */
-	private $_active;
-	
-	/**
-	 * @var int
-	 */
-	private $_offset;
+    const MAX_DISCS_PER_PAGE = 20;
+
+    const MAX_ARTISTS_PER_PAGE = 20;
+
+    /**
+     * @var str
+     */
+    private $_active;
+    
+    /**
+     * @var int
+     */
+    private $_page;
+    /**
+     * @var int
+     */
+    private $_offset;
 	
     /**
      * Construct
@@ -36,14 +40,16 @@ class Index extends Main {
     /**
      * Disc
      * 
-     * @param int $offset
+     * @param int $page
      */
-    public function disc($offset = 0) {
+    public function disc($page = 0) {
     	//Set active
     	$this->_active = 'disc';
     	
+        $this->_page = $page;
+        
     	//Set offset
-    	$this->_offset = $offset;
+    	$this->_offset = $page * self::MAX_DISCS_PER_PAGE;
     	
         //Set page title
         $this->data['page_title'] = 'Discs';
@@ -58,10 +64,13 @@ class Index extends Main {
         $message = (isset($_REQUEST['message'])) ? $_REQUEST['message'] : '';
         
         //Create disc listing
-        $discs = $this->Disc_model->getAllDiscs(self::MAX_DISCS_PER_PAGE, $offset);
+        $discs = $this->Disc_model->getAllDiscs(self::MAX_DISCS_PER_PAGE, $this->_offset);
         
         //Create full page
         $this->_add_html($this->load->view('disc', array('discs' => $discs, 'message' => $message), TRUE), 'full');
+        
+        //Create pager
+        $this->_create_pager('disc');
         
         //Footer
         $this->_create_footer();
@@ -196,14 +205,16 @@ class Index extends Main {
     /**
      * Artist
      * 
-     * @param int $offset
+     * @param int $page
      */
-    public function artist($offset = 0) {
+    public function artist($page = 0) {
     	//Set active
     	$this->_active = 'artist';
 
+        $this->_page = $page;
+        
     	//Set offset
-    	$this->_offset = $offset;
+    	$this->_offset = $this->_page * self::MAX_ARTISTS_PER_PAGE;
     	    	
         //Set page title
         $this->data['page_title'] = 'Artists';
@@ -218,10 +229,13 @@ class Index extends Main {
         $message = (isset($_REQUEST['message'])) ? $_REQUEST['message'] : '';
         
         //Create artist listing
-        $artists = $this->Artist_model->getAllArtists(self::MAX_ARTISTS_PER_PAGE, $offset);
+        $artists = $this->Artist_model->getAllArtists(self::MAX_ARTISTS_PER_PAGE, $this->_offset);
         
         //Create full page
         $this->_add_html($this->load->view('artist', array('artists' => $artists, 'message' => $message), TRUE), 'full');
+        
+        //Create pager
+        $this->_create_pager('artist');
         
         //Footer
         $this->_create_footer();
@@ -487,7 +501,7 @@ class Index extends Main {
             $form .= '</div>';
             
             $form .= '<div class="form_item">';
-            $form .= form_submit(array('name' => 'submit', 'value' => 'ADD >', 'id' => 'disc_submit'));
+            $form .= form_submit(array('name' => 'submit', 'value' => 'ADD', 'id' => 'disc_submit'));
             $form .= '</div>';
             
             $form .= form_close();
@@ -517,7 +531,7 @@ class Index extends Main {
             $form .= '</div>';
             
             $form .= '<div class="form_item">';
-            $form .= form_submit(array('name' => 'submit', 'value' => 'UPDATE >', 'id' => 'disc_submit'));
+            $form .= form_submit(array('name' => 'submit', 'value' => 'UPDATE', 'id' => 'disc_submit'));
             $form .= '</div>';
             
             $form .= form_close();
@@ -545,7 +559,7 @@ class Index extends Main {
             $form .= '</div>';
             
             $form .= '<div class="form_item">';
-            $form .= form_submit(array('name' => 'submit', 'value' => 'ADD >', 'id' => 'artist_submit'));
+            $form .= form_submit(array('name' => 'submit', 'value' => 'ADD', 'id' => 'artist_submit'));
             $form .= '</div>';
             
             $form .= form_close();
@@ -564,7 +578,7 @@ class Index extends Main {
             $form .= '</div>';
             
             $form .= '<div class="form_item">';
-            $form .= form_submit(array('name' => 'submit', 'value' => 'UPDATE >', 'id' => 'artist_submit'));
+            $form .= form_submit(array('name' => 'submit', 'value' => 'UPDATE', 'id' => 'artist_submit'));
             $form .= '</div>';
             
             $form .= form_close();
@@ -593,5 +607,43 @@ class Index extends Main {
     	
     	//Create footer
     	$this->_add_html($this->load->view('footer', array('subnav' => $subnav), TRUE), 'footer');    	
+    }
+    
+    /**
+     * Create pager
+     */
+    private function _create_pager($type) {
+        switch ($type) {
+            case 'disc':
+                $this->load->model('Disc_model');
+                
+                $total = $this->Disc_model->countDiscs();
+                $total_pages = (intval($total / self::MAX_DISCS_PER_PAGE) == ($total / self::MAX_DISCS_PER_PAGE)) ? ($total / self::MAX_DISCS_PER_PAGE) : intval($total / self::MAX_DISCS_PER_PAGE) + 1;
+                
+                break;
+            case 'artist':
+                $this->load->model('Artist_model');
+
+                $total = $this->Artist_model->countArtists();
+                $total_pages = (intval($total / self::MAX_ARTISTS_PER_PAGE) == ($total / self::MAX_ARTISTS_PER_PAGE)) ? ($total / self::MAX_ARTISTS_PER_PAGE) : intval($total / self::MAX_ARTISTS_PER_PAGE) + 1;
+                
+                break;
+            default:
+                $total = 0;
+                
+                break;
+        }
+        
+        $pager = array();
+        
+        for($i = 0;$i < $total_pages;$i++) {
+            $pager[$i] = array(
+                'display' => $i + 1,
+                'link' => 'index/' . $type . '/' . $i,
+                'status' => ($this->_page == $i) ?  'active' : 'inactive'
+            );
+        }
+        
+        $this->_add_html($this->load->view('pager', array('pager' => $pager), TRUE), 'full');
     }
 }

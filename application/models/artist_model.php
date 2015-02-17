@@ -2,16 +2,24 @@
 require_once 'rb.php';
 
 class Artist_model extends CI_Model {
-    
-	/**
-	 * Construct
-	 */
+
+    /**
+     * Construct
+     */
     public function __construct() {
         parent::__construct();
         
         R::setup('mysql:host=localhost; dbname=rb_test','rb_test','rb_test');
     }
-    
+
+    /**
+     * Count artists
+     * 
+     * @return int
+     */
+    public function countArtists() {
+        return R::count('artist');
+    }     
     /**
      * Get all artists
      * 
@@ -19,8 +27,17 @@ class Artist_model extends CI_Model {
      * @param int $offset
      * @return RedBean_OODBBean[]
      */
-    public function getAllArtists($limit, $offset) {
+    public function getAllArtists($limit = 0, $offset = 0) {
         $count = R::count('artist');
+        
+        $sql = 'ORDER BY name ASC';
+        
+        if($limit == 0) {
+            $limit = $count;
+        }
+        $sql .= ' LIMIT ' . $limit;
+        $sql .= ' OFFSET ' . $offset;
+
         
         $artists = R::findAll('artist', 'ORDER BY name ASC LIMIT ' . $limit . ' OFFSET ' . $offset);
         

@@ -28,6 +28,6 @@
     <?php endif; ?>
 </div>
 <div id="addartist">
-    <?php print anchor('index/addartist','ADD ARTIST >'); ?>
+    <?php print anchor('index/addartist','ADD ARTIST'); ?>
 </div>
 <div class="clear"></div>
