@@ -13,6 +13,15 @@ class Disc_model extends CI_Model {
     }
     
     /**
+     * Count discs
+     * 
+     * @return int
+     */
+    public function countDiscs() {
+        return R::count('disc');
+    }
+
+        /**
      * Get all discs
      * 
      * @param int $limit

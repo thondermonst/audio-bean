@@ -7,8 +7,8 @@ html, body {
     margin: 0;
 }
 
-a {
-	color: #ff0000;
+a, a:hover  {
+    color: #ff0000;
 }
 
 #container {
@@ -49,7 +49,7 @@ a {
 }
 
 #header #navigation {
-	margin-top: -30px;
+    margin-top: -30px;
 }
 
 #footer #subnavigation {
@@ -63,11 +63,11 @@ a {
 }
 
 #header #navigation ul {
-	float: left;
+    float: left;
 }
 
 #footer #subnavigation ul {
-	float: right;
+    float: right;
 }
 
 #header #navigation ul li, #footer #subnavigation ul li {
@@ -81,11 +81,11 @@ a {
 }
 
 #header #navigation ul li {
-	margin-right: 5px;
+    margin-right: 5px;
 }
 
 #footer #subnavigation ul li {
-	margin-left: 5px;
+    margin-left: 5px;
 }
 
 #header #navigation ul li a, #footer #subnavigation ul li a {
@@ -252,6 +252,40 @@ a {
     cursor: pointer;
 }
 
+#main #pager {
+    float: left;
+    width: 100%;
+}
+
+#main #pager ul {
+    margin: 25px 0 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+#main #pager ul li {
+    float: left;
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    line-height: 20px;
+    text-align: center;
+    box-shadow: 1px 1px 1px #999999;
+}
+
+#main #pager ul li a {
+    display: block;
+    width: 20px;
+    height: 20px;
+    color: #999999;
+    text-decoration: none;
+}
+
+#main #pager ul li a.active { 
+    color: #000000;
+    font-weight: bold;
+}
 
 #footer {
     float: left;
@@ -262,7 +296,7 @@ a {
 #footer #bottom {
     float: left;
     width: 100%;
-	text-align: center;
+    text-align: center;
 }
 
 #footer #bottom a {
